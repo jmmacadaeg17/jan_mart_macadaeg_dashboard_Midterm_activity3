@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            width: 100vh;
+            height: auto;
+        }
+        
+        .sidebar {
+            width: 220px;
+            background: #0b61d8;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        .sidebar h2 {
+            margin-top: 0;
+        }
+        
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .sidebar ul li {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .sidebar ul li:hover {
+            background: #084cb1;
+        }
+        
+        .main {
+            flex-grow: 1;
+            padding: 30px;
+            background: #f9f9f9;
+        }
+        
+        .main h1 {
+            margin-top: 0;
+        }
+        
+        .form-section {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .form-section img {
+            max-width: 200px;
+            border-radius: 8px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+        }
+        
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #0b61d8;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #084cb1;
+        }
+        
+        h1 {
+            margin-top: 0;
+        }
+        
+        .stats-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stats-row input {
+            padding: 10px;
+            font-size: 16px;
+            width: 120px;
+        }
+        
+        .label {
+            font-weight: bold;
+            width: 60px;
+        }
+        
+        .desc-input {
+            width: 200px;
+        }
+        
+        .btn {
+            background: #0b61d8;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #084cb1;
+        }
+        
+        .main {
+            flex-grow: 1;
+            padding: 30px;
+            background: #f9f9f9;
+        }
+        
+        h1 {
+            margin-top: 0;
+        }
+        
+        .form-section {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .form-section img {
+            max-width: 200px;
+            border-radius: 8px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+        }
+        
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #0b61d8;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #084cb1;
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 12px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        td {
+            vertical-align: top;
+        }
+        
+        .btn {
+            padding: 8px 14px;
+            margin: 2px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+            <li onclick="showSection('heroSection')">Hero</li>
+            <li onclick="showSection('statsSection')">Stats</li>
+            <li onclick="showSection('aboutSection')">About Us</li>
+            <li onclick="showSection('howItWorksSection')">How It Works</li>
+            <li onclick="showSection('doctorsSection')">Best Doctors</li>
+            <li onclick="showSection('clientsSection')">What Clients Say</li>
+        </ul>
+    </div>
+    <div id="heroSection" class="section">
+        <h1>Modify Hero/Banner Section</h1>
+
+        <div class="form-section">
+            <div>
+                <label><strong>Upload Banner Image</strong></label><br/>
+                <input type="file" accept="image/*" onchange="previewImage(event)"><br/><br/>
+                <img id="bannerPreview" src="img/image 1.png" alt="Banner Preview" />
+            </div>
+
+            <div style="flex-grow: 1;">
+                <label><strong>Banner Description</strong></label><br/>
+                <textarea id="bannerText">He preference connection astonished on of ye. Partiality on or continuing in particular principles as. Do believing oh disposing to supported allowance we.</textarea>
+                <br/>
+                <button class="btn" onclick="updateBanner()">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="statsSection" class="section" style="display:none;">
+        <h1>Modify Our Stats Section</h1>
+
+        <div class="stats-row">
+            <div class="label">Stat 1</div>
+            <input type="text" id="stat1" value="25,356" />
+            <input type="text" id="desc1" class="desc-input" value="Patients Served" />
+            <button class="btn" onclick="updateStat(1)">Update</button>
+        </div>
+
+        <div class="stats-row">
+            <div class="label">Stat 2</div>
+            <input type="text" id="stat2" value="6,050" />
+            <input type="text" id="desc2" class="desc-input" value="Consultations this week" />
+            <button class="btn" onclick="updateStat(2)">Update</button>
+        </div>
+
+        <div class="stats-row">
+            <div class="label">Stat 3</div>
+            <input type="text" id="stat3" value="21" />
+            <input type="text" id="desc3" class="desc-input" value="Locations" />
+            <button class="btn" onclick="updateStat(3)">Update</button>
+        </div>
+
+        <div class="stats-row">
+            <div class="label">Stat 4</div>
+            <input type="text" id="stat4" value="95%" />
+            <input type="text" id="desc4" class="desc-input" value="Success Rate" />
+            <button class="btn" onclick="updateStat(4)">Update</button>
+        </div>
+    </div>
+
+    <div id="aboutSection" class="section" style="display:none;">
+        <h1>Modify About Us Section</h1>
+
+        <div class="form-section">
+            <div>
+                <label><strong>Upload About Us Image</strong></label><br/>
+                <input type="file" accept="image/*" onchange="previewAboutImage(event)"><br/><br/>
+                <img id="aboutPreview" src="img/about.png" alt="About Us Preview" />
+            </div>
+
+            <div style="flex-grow: 1;">
+                <label><strong>About Us Description</strong></label><br/>
+                <textarea id="aboutDesc">He preference connection astonished on of ye. Partiality on or continuing in particular principles as. Do believing oh disposing to supported allowance we.</textarea>
+                <br/>
+                <button class="btn" onclick="updateAbout()">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="howItWorksSection" class="section" style="display:none;">
+        <h1>Modify How It Works Section</h1>
+
+        <div class="stats-row">
+            <div class="label">01</div>
+            <input type="text" id="step1-title" value="Create Account" />
+            <input type="text" id="step1-desc" class="desc-input" value="Latter person am secure of estate ger" />
+            <button class="btn" onclick="updateStep(1)">Update</button>
+        </div>
+
+        <div class="stats-row">
+            <div class="label">02</div>
+            <input type="text" id="step2-title" value="Search Doctor" />
+            <input type="text" id="step2-desc" class="desc-input" value="Latter person am secure of estate ger" />
+            <button class="btn" onclick="updateStep(2)">Update</button>
+        </div>
+
+        <div class="stats-row">
+            <div class="label">03</div>
+            <input type="text" id="step3-title" value="Schedule Appo" />
+            <input type="text" id="step3-desc" class="desc-input" value="Latter person am secure of estate ger" />
+            <button class="btn" onclick="updateStep(3)">Update</button>
+        </div>
+
+        <div class="stats-row">
+            <div class="label">04</div>
+            <input type="text" id="step4-title" value="Start Consulti" />
+            <input type="text" id="step4-desc" class="desc-input" value="Latter person am secure of estate ger" />
+            <button class="btn" onclick="updateStep(4)">Update</button>
+        </div>
+    </div>
+
+
+    <div id="doctorsSection" class="section" style="display:none;">
+        <h1>View All Doctors</h1>
+        <button class="btn" style="background: green; margin-bottom: 15px;">Add New Doctor</button>
+
+        <input type="text" id="searchInput" onkeyup="searchDoctors()" placeholder="Search..." style="padding: 8px; width: 250px; margin-bottom: 10px;">
+
+        <table style="width:100%; border-collapse: collapse; background: white;">
+            <thead>
+                <tr style="background-color: #eee;">
+                    <th>ID</th>
+                    <th>Doctor Image</th>
+                    <th>Doctor Name</th>
+                    <th>Qualification</th>
+                    <th>Rating (1-5 Stars)</th>
+                    <th>Short Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="doctorsTable">
+                <tr>
+                    <td>1</td>
+                    <td><img src="img/Rectangle 409.png" alt="Dr. Andrew" style="width:50px; height:50px; border-radius:50%;"></td>
+                    <td>Dr. Andrew</td>
+                    <td>Surgeon</td>
+                    <td>⭐⭐⭐⭐⭐</td>
+                    <td>And excellence partiality estimating terminated day everything.</td>
+                    <td>
+                        <button class="btn" style="background:#007bff;">Edit</button>
+                        <button class="btn" style="background:#dc3545;">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><img src="img/Rectangle 409 (1).png" alt="Dr. Brown" style="width:50px; height:50px; border-radius:50%;"></td>
+                    <td>Dr. Brown</td>
+                    <td>Oncologist</td>
+                    <td>⭐⭐⭐⭐⭐</td>
+                    <td>And excellence partiality estimating terminated day everything.</td>
+                    <td>
+                        <button class="btn" style="background:#007bff;">Edit</button>
+                        <button class="btn" style="background:#dc3545;">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><img src="img/Rectangle 409 (2).png" alt="Dr. Shaun" style="width:50px; height:50px; border-radius:50%;"></td>
+                    <td>Dr. Shaun</td>
+                    <td>Surgeon</td>
+                    <td>⭐⭐⭐⭐</td>
+                    <td>And excellence partiality estimating terminated day everything.</td>
+                    <td>
+                        <button class="btn" style="background:#007bff;">Edit</button>
+                        <button class="btn" style="background:#dc3545;">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <div id="entriesCount">Showing 1 to 3 of 3 entries</div>
+            <div>
+                <button class="btn" style="background: #d3d3d3; color: black; margin-right: 5px;">Previous</button>
+                <button class="btn" style="background: #007bff;">1</button>
+                <button class="btn" style="background: #d3d3d3; color: black; margin-left: 5px;">Next</button>
+            </div>
+        </div>
+        <div id="doctorFormModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center;">
+            <div style="background:white; padding:20px; border-radius:8px; width:500px;">
+                <h2 id="formTitle">Add New Doctor</h2>
+
+                <label>Doctor Image</label><br>
+                <input type="file" id="doctorImage" accept="image/*" onchange="previewDoctorImage(event)">
+                <br><img id="doctorPreview" src="" style="max-width:100px; margin-top:10px;"><br><br>
+
+                <label>Doctor Name</label><br>
+                <input type="text" id="doctorName" placeholder="Enter Doctor Name" style="width:100%; padding:8px;"><br><br>
+
+                <label>Qualification (e.g., Surgeon)</label><br>
+                <input type="text" id="doctorQualification" placeholder="Enter Doctor Qualification" style="width:100%; padding:8px;"><br><br>
+
+                <label>Rating (1-5 Stars)</label><br>
+                <input type="number" id="doctorRating" min="1" max="5" placeholder="Enter Rating (1-5)" style="width:100%; padding:8px;"><br><br>
+
+                <label>Short Description</label><br>
+                <textarea id="doctorDesc" placeholder="Enter Short Description" style="width:100%; padding:8px; height:80px;"></textarea><br><br>
+
+                <button class="btn" style="background:green;" onclick="saveDoctor()">Save</button>
+                <button class="btn" style="background:gray;" onclick="closeDoctorForm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="clientsSection" class="section" style="display:none;">
+        <h1>View All Clients Comment</h1>
+        <button class="btn" style="background: green; margin-bottom: 15px;">Add New Comment</button>
+
+        <input type="text" id="commentSearchInput" onkeyup="searchComments()" placeholder="Search..." style="padding: 8px; width: 250px; margin-bottom: 10px;">
+
+        <table style="width: 100%; border-collapse: collapse; background: white;">
+            <thead>
+                <tr style="background-color: #eee;">
+                    <th>ID</th>
+                    <th>Comment Title</th>
+                    <th>Comment Description</th>
+                    <th>Rating (1-5 Stars)</th>
+                    <th>Name of Commenter</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="commentsTable">
+                <tr>
+                    <td>1</td>
+                    <td>My best pick so far</td>
+                    <td>Warrant present garrets limited cordial in inquiry to. Supported me sweetness behaviour shameless excellent so arranging.</td>
+                    <td>⭐⭐⭐⭐⭐</td>
+                    <td>Paul</td>
+                    <td>
+                        <button class="btn" style="background:#007bff;">Edit</button>
+                        <button class="btn" style="background:#dc3545;">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Never this amazed</td>
+                    <td>Warrant present garrets limited cordial in inquiry to. Supported me sweetness behaviour shameless excellent so arranging.</td>
+                    <td>⭐⭐⭐⭐⭐</td>
+                    <td>Julian Vidal</td>
+                    <td>
+                        <button class="btn" style="background:#007bff;">Edit</button>
+                        <button class="btn" style="background:#dc3545;">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Thank you!</td>
+                    <td>Warrant present garrets limited cordial in inquiry to. Supported me sweetness behaviour shameless excellent so arranging.</td>
+                    <td>⭐⭐⭐⭐⭐</td>
+                    <td>Fabian Vidal</td>
+                    <td>
+                        <button class="btn" style="background:#007bff;">Edit</button>
+                        <button class="btn" style="background:#dc3545;">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <div id="entriesCount">Showing 1 to 3 of 3 entries</div>
+            <div>
+                <button class="btn" style="background: #d3d3d3; color: black; margin-right: 5px;">Previous</button>
+                <button class="btn" style="background: #007bff;">1</button>
+                <button class="btn" style="background: #d3d3d3; color: black; margin-left: 5px;">Next</button>
+            </div>
+        </div>
+    </div>
+    <div id="commentFormModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center;">
+        <div style="background:white; padding:20px; border-radius:8px; width:500px;">
+            <h2 id="commentFormTitle">Add New Comment</h2>
+
+            <label>Name of Commenter</label><br>
+            <input type="text" id="commenterName" placeholder="Enter Name of Commenter" style="width:100%; padding:8px;"><br><br>
+
+            <label>Comment Title</label><br>
+            <input type="text" id="commentTitle" placeholder="Enter Comment Title" style="width:100%; padding:8px;"><br><br>
+
+            <label>Comment Description</label><br>
+            <textarea id="commentDesc" placeholder="Enter Comment Description" style="width:100%; padding:8px; height:80px;"></textarea><br><br>
+
+            <label>Rating (1-5 Stars)</label><br>
+            <input type="number" id="commentRating" min="1" max="5" placeholder="Enter Rating (1-5)" style="width:100%; padding:8px;"><br><br>
+
+            <button class="btn" style="background:green;" onclick="saveComment()">Save</button>
+            <button class="btn" style="background:gray;" onclick="closeCommentForm()">Cancel</button>
+        </div>
+    </div>
+
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.style.display = 'none';
+            });
+
+
+            document.getElementById(sectionId).style.display = 'block';
+        }
+    </script>
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('bannerPreview').src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function updateBanner() {
+            const desc = document.getElementById('bannerText').value;
+            alert("Banner updated with description:\n" + desc);
+        }
+    </script>
+
+    <script>
+        function updateStat(number) {
+            const stat = document.getElementById(`stat${number}`).value;
+            const desc = document.getElementById(`desc${number}`).value;
+            alert(`Stat ${number} Updated:\nValue: ${stat}\nDescription: ${desc}`);
+        }
+    </script>
+
+    <script>
+        function previewAboutImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('aboutPreview').src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function updateAbout() {
+            const desc = document.getElementById('aboutDesc').value;
+            alert("About Us section updated with description:\n" + desc);
+        }
+    </script>
+    <script>
+        function updateStep(number) {
+            const title = document.getElementById(`step${number}-title`).value;
+            const desc = document.getElementById(`step${number}-desc`).value;
+            alert(`Step ${number} Updated:\nTitle: ${title}\nDescription: ${desc}`);
+        }
+    </script>
+
+    <script>
+        function searchDoctors() {
+            const input = document.getElementById("searchInput").value.toLowerCase();
+            const rows = document.querySelectorAll("#doctorsTable tr");
+
+            rows.forEach(row => {
+                const name = row.children[2].textContent.toLowerCase();
+                const qualification = row.children[3].textContent.toLowerCase();
+                if (name.includes(input) || qualification.includes(input)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function searchComments() {
+            const input = document.getElementById("commentSearchInput").value.toLowerCase();
+            const rows = document.querySelectorAll("#commentsTable tr");
+
+            rows.forEach(row => {
+                const title = row.children[1].textContent.toLowerCase();
+                const desc = row.children[2].textContent.toLowerCase();
+                const name = row.children[4].textContent.toLowerCase();
+                if (title.includes(input) || desc.includes(input) || name.includes(input)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+    <script>
+        let editingDoctorId = null;
+
+        function openAddDoctorForm() {
+            editingDoctorId = null;
+            document.getElementById("formTitle").innerText = "Add New Doctor";
+            document.getElementById("doctorName").value = "";
+            document.getElementById("doctorQualification").value = "";
+            document.getElementById("doctorRating").value = "";
+            document.getElementById("doctorDesc").value = "";
+            document.getElementById("doctorPreview").src = "";
+            document.getElementById("doctorFormModal").style.display = "flex";
+        }
+
+        function openEditDoctorForm(row, id) {
+            editingDoctorId = id;
+            document.getElementById("formTitle").innerText = "Edit Doctor";
+
+            const cells = row.children;
+            document.getElementById("doctorName").value = cells[2].innerText;
+            document.getElementById("doctorQualification").value = cells[3].innerText;
+            document.getElementById("doctorRating").value = cells[4].innerText.length;
+            document.getElementById("doctorDesc").value = cells[5].innerText;
+            document.getElementById("doctorPreview").src = cells[1].querySelector("img").src;
+
+            document.getElementById("doctorFormModal").style.display = "flex";
+        }
+
+        function closeDoctorForm() {
+            document.getElementById("doctorFormModal").style.display = "none";
+        }
+
+        function previewDoctorImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('doctorPreview').src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function saveDoctor() {
+            const name = document.getElementById("doctorName").value;
+            const qualification = document.getElementById("doctorQualification").value;
+            const rating = document.getElementById("doctorRating").value;
+            const desc = document.getElementById("doctorDesc").value;
+            const image = document.getElementById("doctorPreview").src;
+
+            if (editingDoctorId) {
+                // Update doctor
+                const row = document.querySelector(`#doctorsTable tr[data-id='${editingDoctorId}']`);
+                row.children[1].querySelector("img").src = image;
+                row.children[2].innerText = name;
+                row.children[3].innerText = qualification;
+                row.children[4].innerText = "⭐".repeat(rating);
+                row.children[5].innerText = desc;
+            } else {
+                // Add new doctor
+                const table = document.getElementById("doctorsTable");
+                const newRow = document.createElement("tr");
+                const newId = table.children.length + 1;
+                newRow.setAttribute("data-id", newId);
+
+                newRow.innerHTML = `
+        <td>${newId}</td>
+        <td><img src="${image}" style="width:50px; height:50px; border-radius:50%;"></td>
+        <td>${name}</td>
+        <td>${qualification}</td>
+        <td>${"⭐".repeat(rating)}</td>
+        <td>${desc}</td>
+        <td>
+          <button class="btn" style="background:#007bff;" onclick="openEditDoctorForm(this.parentElement.parentElement, ${newId})">Edit</button>
+          <button class="btn" style="background:#dc3545;" onclick="this.parentElement.parentElement.remove()">Delete</button>
+        </td>
+      `;
+                table.appendChild(newRow);
+            }
+
+            closeDoctorForm();
+        }
+    </script>
+
+    <script>
+        let editingCommentId = null;
+
+        function openAddCommentForm() {
+            editingCommentId = null;
+            document.getElementById("commentFormTitle").innerText = "Add New Comment";
+            document.getElementById("commenterName").value = "";
+            document.getElementById("commentTitle").value = "";
+            document.getElementById("commentDesc").value = "";
+            document.getElementById("commentRating").value = "";
+            document.getElementById("commentFormModal").style.display = "flex";
+        }
+
+        function openEditCommentForm(row, id) {
+            editingCommentId = id;
+            document.getElementById("commentFormTitle").innerText = "Edit Comment";
+
+            const cells = row.children;
+            document.getElementById("commentTitle").value = cells[1].innerText;
+            document.getElementById("commentDesc").value = cells[2].innerText;
+            document.getElementById("commentRating").value = cells[3].innerText.length;
+            document.getElementById("commenterName").value = cells[4].innerText;
+
+            document.getElementById("commentFormModal").style.display = "flex";
+        }
+
+        function closeCommentForm() {
+            document.getElementById("commentFormModal").style.display = "none";
+        }
+
+        function saveComment() {
+            const title = document.getElementById("commentTitle").value;
+            const desc = document.getElementById("commentDesc").value;
+            const rating = document.getElementById("commentRating").value;
+            const name = document.getElementById("commenterName").value;
+
+            if (editingCommentId) {
+                // Update
+                const row = document.querySelector(`#commentsTable tr[data-id='${editingCommentId}']`);
+                row.children[1].innerText = title;
+                row.children[2].innerText = desc;
+                row.children[3].innerText = "⭐".repeat(rating);
+                row.children[4].innerText = name;
+            } else {
+                // Add new
+                const table = document.getElementById("commentsTable");
+                const newId = table.querySelectorAll("tr").length + 1;
+                const newRow = document.createElement("tr");
+                newRow.setAttribute("data-id", newId);
+
+                newRow.innerHTML = `
+            <td>${newId}</td>
+            <td>${title}</td>
+            <td>${desc}</td>
+            <td>${"⭐".repeat(rating)}</td>
+            <td>${name}</td>
+            <td>
+                <button class="btn" style="background:#007bff;" onclick="openEditCommentForm(this.parentElement.parentElement, ${newId})">Edit</button>
+                <button class="btn" style="background:#dc3545;" onclick="this.parentElement.parentElement.remove()">Delete</button>
+            </td>
+        `;
+                table.appendChild(newRow);
+            }
+
+            closeCommentForm();
+        }
+    </script>
+
+
+</body>
+
+</html>
